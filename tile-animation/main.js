@@ -1,4 +1,11 @@
+/**
+ * TileContainer class used to manage what tile is currently shown
+ */
 class TileContainer {
+  /**
+   * TileContainer constructor
+   * @param {Node} container the container div
+   */
   constructor(container) {
     this.container = container
     this.currentX = 0
@@ -6,6 +13,7 @@ class TileContainer {
     this.width = container.dataset.width || 3
     this.height = container.dataset.height || 3
 
+    // Bind the functions so they can be called from event listeners
     this.viewTile = this.viewTile.bind(this)
     this.scrollDown = this.scrollDown.bind(this)
     this.scrollUp = this.scrollUp.bind(this)
@@ -13,6 +21,11 @@ class TileContainer {
     this.scrollRight = this.scrollRight.bind(this)
   }
 
+  /**
+   * Scroll to the coordinates of a given tile. the range is (0,0) to (this.width-1, this.height-1)
+   * @param {number} x the x coordinate of the tile
+   * @param {number} y the y coordinate of the tile
+   */
   viewTile(x = this.currentX, y = this.currentY) {
     console.info(`Scrolling from ${this.currentX},${this.currentY} to ${x},${y}`)
     if (x >= this.width) {
@@ -33,32 +46,50 @@ class TileContainer {
     const translateX = x * 100
     const translateY = y * 100
     this.container.style.transform = `translate(-${translateX}vw, -${translateY}vh)`
-    return true
   }
 
+  /**
+   * Scroll down by n tiles
+   * @param {number=1} n the amount of tiles to scroll by
+   */
   scrollDown(n = 1) {
     this.currentY += n
-    return this.viewTile()
+    this.viewTile()
   }
 
+  /**
+   * Scroll up by n tiles
+   * @param {number=1} n the amount of tiles to scroll by
+   */
   scrollUp(n = 1) {
     this.currentY -= n
-    return this.viewTile()
+    this.viewTile()
   }
 
+  /**
+   * Scroll right by n tiles
+   * @param {number=1} n the amount of tiles to scroll by
+   */
   scrollRight(n = 1) {
     console.log(this)
     this.currentX += n
-    return this.viewTile()
+    this.viewTile()
   }
 
+  /**
+   * Scroll left by n tiles
+   * @param {number=1} n the amount of tiles to scroll by
+   */
   scrollLeft(n = 1) {
     this.currentX -= n
-    return this.viewTile()
+    this.viewTile()
   }
 
+  /**
+   * Scrolls to the next tile in the tree
+   */
   scrollNext() {
-    if(this.currentX === 2) {
+    if (this.currentX === 2) {
       this.currentY += 1
       this.currentX = 0
     } else {
@@ -67,8 +98,11 @@ class TileContainer {
     this.viewTile()
   }
 
+  /**
+   * Scroll to the previous tile in the tree
+   */
   scrollPrev() {
-    if(this.currentX === 0) {
+    if (this.currentX === 0) {
       this.currentY -= 1
       this.currentX = 2
     } else {
@@ -78,17 +112,22 @@ class TileContainer {
   }
 }
 
+// Your container div
 const containerDiv = document.querySelector('.tile-container')
+
+// Instantiate the container
 tileContainer = new TileContainer(containerDiv)
 
+// Go to the prev/next tile when clicking on the container
 containerDiv.addEventListener('click', () => {
-  if(tileContainer.currentY === 2 && tileContainer.currentX === 2) {
+  if (tileContainer.currentY === 2 && tileContainer.currentX === 2)
     scrollNext = false
-  }
-  if(tileContainer.currentY === 0 && tileContainer.currentX === 0) {
-    scrollNext = true
-  }
 
-  if(scrollNext) tileContainer.scrollNext()
-  else tileContainer.scrollPrev()
-})  
+  if (tileContainer.currentY === 0 && tileContainer.currentX === 0)
+    scrollNext = true
+
+  if (scrollNext)
+    tileContainer.scrollNext()
+  else
+    tileContainer.scrollPrev()
+})
