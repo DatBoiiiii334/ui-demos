@@ -1,0 +1,44 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    height: 100vh;
+}
+
+.tile-viewport {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.tile-container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 300vw;
+    height: 100vh;
+    /*transform: translate(-100vw, -100vh);*/
+    transition: transform 600ms ease;
+}
+
+.tile {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tile:nth-of-type(1n) {
+    background: rebeccapurple;
+}
+
+.tile:nth-of-type(2n) {
+    background: burlywood;
+}
+
+.tile:nth-of-type(6n) {
+    background: royalblue;
+}
