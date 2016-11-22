@@ -81,7 +81,7 @@ class TileContainer {
 const containerDiv = document.querySelector('.tile-container')
 tileContainer = new TileContainer(containerDiv)
 
-document.body.addEventListener('click', () => {
+containerDiv.addEventListener('click', () => {
   if(tileContainer.currentY === 2 && tileContainer.currentX === 2) {
     scrollNext = false
   }
